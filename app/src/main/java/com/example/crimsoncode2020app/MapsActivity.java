@@ -3,6 +3,7 @@ package com.example.crimsoncode2020app;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -29,11 +30,7 @@ public class MapsActivity extends FragmentActivity
 {
 
     private FusedLocationProviderClient userLocation;
-    private boolean LocationPermission;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    public NavController navCon (int id){
-        return Navigation.findNavController(findViewById(id));
-    }
+    MapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +43,23 @@ public class MapsActivity extends FragmentActivity
 
 
         userLocation = LocationServices.getFusedLocationProviderClient(this);
+
+        mapFragment = new MapFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.my_nav_host_fragment, mapFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if (requestCode == MapFragment.MY_PERMISSIONS_REQUEST_LOCATION){
+            mapFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 /*
     @Override
