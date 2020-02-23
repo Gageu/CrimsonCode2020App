@@ -25,10 +25,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener{
-
-    private GoogleMap mMap;
-
+public class MapsActivity extends FragmentActivity
+{
 
     private FusedLocationProviderClient userLocation;
     private boolean LocationPermission;
@@ -46,16 +44,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         NavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.study_map);
 
-        mapFragment.getMapAsync(this);
-
-        // Construct a FusedLocationProviderClient.
         userLocation = LocationServices.getFusedLocationProviderClient(this);
     }
-
+/*
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -112,5 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return false;
     }
+    */
+
 
 }

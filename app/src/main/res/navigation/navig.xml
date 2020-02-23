@@ -14,23 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".MapsActivity" >
-        <action
-            android:id="@+id/action_study_map_to_settings2"
-            app:destination="@id/settings" />
-        <action
-            android:id="@+id/action_study_map_to_placeholder2"
-            app:destination="@id/placeholder2" />
-        <action
-            android:id="@+id/action_study_map_to_placeholder"
-            app:destination="@id/placeholder" />
-        <action
-            android:id="@+id/action_study_map_to_placeholder4"
-            app:destination="@id/placeholder4" />
-        <action
-            android:id="@+id/action_study_map_to_placeholder3"
-            app:destination="@id/placeholder3" />
-    </fragment>
+        tools:context=".MapsActivity" />
 
     <fragment
         android:id="@+id/settings"
