@@ -1,21 +1,15 @@
 package com.example.crimsoncode2020app;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import android.animation.ObjectAnimator;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,15 +20,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerClickListener{
 
     private GoogleMap mMap;
 
 
-    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private FusedLocationProviderClient userLocation;
     private boolean LocationPermission;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     public NavController navCon (int id){
@@ -46,20 +42,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
-
         NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
         NavigationView navView = findViewById(R.id.nav_view);
         NavigationUI.setupWithNavController(navView, navController);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(R.id.study_map);
 
         mapFragment.getMapAsync(this);
 
         // Construct a FusedLocationProviderClient.
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        userLocation = LocationServices.getFusedLocationProviderClient(this);
     }
 
     @Override
@@ -67,11 +61,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         mMap.setOnMapLongClickListener(this);
+        mMap.setOnMarkerClickListener(this);
         // Add a marker in Sydney and move the camera
         LatLng spark = new LatLng(46.727396, -117.164676);
         mMap.addMarker(new MarkerOptions().position(spark).title("Marker in P-Town"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(spark));
+
         getLocationPermission();
+
+        userLocation.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            return;
+                        }
+
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+
+                    }
+                });
+
+
+
     }
 
     private void getLocationPermission() {
@@ -96,5 +108,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
     }
 
+    public boolean onMarkerClick(Marker marker){
+
+        return false;
+    }
 
 }
