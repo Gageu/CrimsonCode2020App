@@ -3,8 +3,13 @@ package com.example.crimsoncode2020app;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 
 
@@ -16,40 +21,75 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
+public class MapsActivity extends FragmentActivity
+{
 
-    private GoogleMap mMap;
-
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    private boolean LocationPermission;
-    private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private FusedLocationProviderClient userLocation;
+    MapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
 
-        mapFragment.getMapAsync(this);
+        NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
+        NavigationView navView = findViewById(R.id.nav_view);
+        NavigationUI.setupWithNavController(navView, navController);
 
-        // Construct a FusedLocationProviderClient.
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        userLocation = LocationServices.getFusedLocationProviderClient(this);
+
+        mapFragment = new MapFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.my_nav_host_fragment, mapFragment);
+        transaction.commit();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if (requestCode == MapFragment.MY_PERMISSIONS_REQUEST_LOCATION){
+            mapFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+/*
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         mMap.setOnMapLongClickListener(this);
+        mMap.setOnMarkerClickListener(this);
         // Add a marker in Sydney and move the camera
         LatLng spark = new LatLng(46.727396, -117.164676);
         mMap.addMarker(new MarkerOptions().position(spark).title("Marker in P-Town"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(spark));
+
         getLocationPermission();
+
+        userLocation.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            return;
+                        }
+
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+
+                    }
+                });
+
+
+
     }
 
     private void getLocationPermission() {
@@ -73,4 +113,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .title("You are here")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
     }
+
+    public boolean onMarkerClick(Marker marker){
+
+        return false;
+    }
+    */
+
+
 }
