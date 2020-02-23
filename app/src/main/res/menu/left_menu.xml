@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/nearEvents"
-        android:title="Events Near You" />
+        android:title="EventsNearYou" />
 
     <item
         android:id="@+id/profile"

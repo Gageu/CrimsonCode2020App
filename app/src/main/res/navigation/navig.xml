@@ -22,10 +22,26 @@
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
 
-    <fragment android:id="@+id/placeholder" />
-    <fragment android:id="@+id/placeholder2" />
-    <fragment android:id="@+id/placeholder3" />
-    <fragment android:id="@+id/placeholder4" />
+    <fragment
+        android:id="@+id/friends"
+        android:name="com.example.crimsoncode2020app.Friends"
+        android:label="fragment_friends"
+        tools:layout="@layout/fragment_friends" />
+    <fragment
+        android:id="@+id/search"
+        android:name="com.example.crimsoncode2020app.Search"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/nearEvents"
+        android:name="com.example.crimsoncode2020app.EventsNearYou"
+        android:label="fragment_near_events"
+        tools:layout="@layout/fragment_near_events" />
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.crimsoncode2020app.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 
 
 </navigation>
