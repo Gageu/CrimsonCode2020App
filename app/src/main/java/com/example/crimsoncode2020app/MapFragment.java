@@ -20,6 +20,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentController;
+import androidx.fragment.app.FragmentFactory;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -98,23 +100,17 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
             buildGoogleApiClient();
             mGoogleMap.setMyLocationEnabled(true);
         }
+
+        mGoogleMap.setOnMapLongClickListener(this);
     }
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-/*
-        Projection proj = mGoogleMap.getProjection();
-        Point pos = proj.toScreenLocation(latLng);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        ExampleFragment fragment = new ExampleFragment();
-        fragmentTransaction.add(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
 
         mGoogleMap.addMarker(new MarkerOptions()
                 .position(latLng)
-                .title("")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));*/
+                .title("Math 216 Study Session")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
     }
 
     protected synchronized void buildGoogleApiClient() {
