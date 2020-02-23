@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navig"
+    app:startDestination="@id/study_map">
+
+    <fragment
+        android:id="@+id/study_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".MapsActivity" >
+        <action
+            android:id="@+id/action_study_map_to_settings2"
+            app:destination="@id/settings" />
+        <action
+            android:id="@+id/action_study_map_to_placeholder2"
+            app:destination="@id/placeholder2" />
+        <action
+            android:id="@+id/action_study_map_to_placeholder"
+            app:destination="@id/placeholder" />
+        <action
+            android:id="@+id/action_study_map_to_placeholder4"
+            app:destination="@id/placeholder4" />
+        <action
+            android:id="@+id/action_study_map_to_placeholder3"
+            app:destination="@id/placeholder3" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.example.crimsoncode2020app.Settings"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment android:id="@+id/placeholder" />
+    <fragment android:id="@+id/placeholder2" />
+    <fragment android:id="@+id/placeholder3" />
+    <fragment android:id="@+id/placeholder4" />
+
+
+</navigation>

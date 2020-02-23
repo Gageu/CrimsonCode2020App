@@ -1,12 +1,20 @@
 package com.example.crimsoncode2020app;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.animation.ObjectAnimator;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 
 
@@ -19,23 +27,31 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.navigation.NavigationView;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
 
     private GoogleMap mMap;
 
-    private float x1,x2;
-    static final int MIN_DISTANCE = 150, MAX_DISTANCE = 300;
-    static  final  int MAX_MARGIN = 30;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private boolean LocationPermission;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    public NavController navCon (int id){
+        return Navigation.findNavController(findViewById(id));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+
+
+        NavController navController = Navigation.findNavController(this, R.id.my_nav_host_fragment);
+        NavigationView navView = findViewById(R.id.nav_view);
+        NavigationUI.setupWithNavController(navView, navController);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -80,29 +96,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event)
-    {
-        switch(event.getAction())
-        {
-            case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                float deltaX = Math.abs(x2 - x1);
-                if ((deltaX > MIN_DISTANCE && deltaX < MAX_DISTANCE) && x1 < 50)
-                {
-                    ObjectAnimator animation = ObjectAnimator.ofFloat(findViewById(R.id.Nav_bar), "translationX", 100f);
-                    animation.setDuration(2000);
-                    animation.start();
-                }
-                else
-                {
-                    // consider as something else - a screen tap for example
-                }
-                break;
-        }
-        return super.onTouchEvent(event);
-    }
+
 }
