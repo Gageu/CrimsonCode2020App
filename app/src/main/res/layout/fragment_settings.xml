@@ -8,6 +8,7 @@
 
     <TextView
         android:id="@+id/settingsTitle"
+        android:name="com.example.crimsoncode2020app.Setting"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:background="#46413C3C"
