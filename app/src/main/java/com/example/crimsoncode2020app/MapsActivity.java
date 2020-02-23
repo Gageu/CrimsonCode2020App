@@ -4,8 +4,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.animation.ObjectAnimator;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -21,6 +23,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
 
     private GoogleMap mMap;
+
+    private float x1,x2;
+    static final int MIN_DISTANCE = 150, MAX_DISTANCE = 300;
+    static  final  int MAX_MARGIN = 30;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private boolean LocationPermission;
@@ -72,5 +78,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .position(latLng)
                 .title("You are here")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        switch(event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                x1 = event.getX();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = event.getX();
+                float deltaX = Math.abs(x2 - x1);
+                if ((deltaX > MIN_DISTANCE && deltaX < MAX_DISTANCE) && x1 < 50)
+                {
+                    ObjectAnimator animation = ObjectAnimator.ofFloat(findViewById(R.id.Nav_bar), "translationX", 100f);
+                    animation.setDuration(2000);
+                    animation.start();
+                }
+                else
+                {
+                    // consider as something else - a screen tap for example
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
     }
 }

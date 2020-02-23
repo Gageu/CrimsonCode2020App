@@ -33,7 +33,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:layout_marginTop="32dp"
             android:visibility="visible"
             app:menu="@menu/left_menu"
             map:layout_constraintStart_toStartOf="parent"
