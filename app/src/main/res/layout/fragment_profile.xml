@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:orientation="vertical"
     tools:context=".Profile">
 
@@ -12,7 +13,7 @@
         android:name="com.example.crimsoncode2020app.Profile"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="#46413C3C"
+        android:background="#9305ff"
         android:gravity="center"
         android:text="Profile"
         android:textSize="24sp"
