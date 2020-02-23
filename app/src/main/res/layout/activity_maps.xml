@@ -29,11 +29,9 @@
             android:id="@+id/Nav_bar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            android:menu="@menu/left_menu"
             android:layout_gravity="start"
+            android:layout_marginTop="32dp"
+            android:menu="@menu/left_menu"
             android:visibility="visible"
             map:layout_constraintStart_toStartOf="parent"
             map:layout_constraintTop_toTopOf="parent" />
